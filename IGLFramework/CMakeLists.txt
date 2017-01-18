@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_BUILD_TYPE RelWithDebInfo)
 
 # Where external libraries are
-set(THIRD_PARTY_DIR 3rdparty)
+set(THIRD_PARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty)
 
 # definitions
 #add_definitions(-DIGL_VIEWER_WITH_NANOGUI -DNANOVG_GL3_IMPLEMENTATION)
@@ -84,7 +84,7 @@ include_directories(${THIRD_PARTY_DIR}/nanoflann/include)
 
 # List of source files
 set(SOURCE_FILES
-    main.cpp
+    src/main.cpp
     )
 
 # Create program
