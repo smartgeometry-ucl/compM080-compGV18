@@ -126,17 +126,23 @@ recalcNeighbours(int kNeighbours, CloudT const& V, igl::viewer::Viewer &viewer) 
 }
 
 int main(int argc, char *argv[]) {
-
     Eigen::MatrixXd V;
     Eigen::MatrixXi F;
+
     bool boolVariable = true;
     float floatVariable = 0.1f;
     int kNeighbours = 5;
     enum Orientation { Up=0, Down, Left, Right } dir = Up;
 
-
     // Load a mesh in OFF format
-    igl::readOFF("../3rdparty/libigl/tutorial/shared/bunny.off", V, F);
+    std::string meshPath = "../../3rdparty/libigl/tutorial/shared/bunny.off";
+    if (argc > 1)
+        meshPath = std::string(argv[1]);
+    igl::readOFF(meshPath, V, F);
+    if (!(V.rows() > 0)) {
+        std::cerr << "Could not read mesh at " << meshPath << "...exiting...\n";
+        return EXIT_FAILURE;
+    }
 
     // Plot the mesh
     igl::viewer::Viewer viewer;
