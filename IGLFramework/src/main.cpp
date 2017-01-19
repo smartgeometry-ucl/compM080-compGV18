@@ -1,8 +1,11 @@
-#include "igl/readOFF.h"
-#include "igl/viewer/Viewer.h"
-
 #include "nanogui/formhelper.h"
 #include "nanogui/screen.h"
+
+#include "igl/readOFF.h"
+#ifdef _WIN32
+	#include "nanogui/opengl.h"
+#endif
+#include "igl/viewer/Viewer.h"
 
 #include <iostream>
 #include "nanoflann.hpp"

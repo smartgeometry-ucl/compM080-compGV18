@@ -30,11 +30,15 @@ include_directories(${THIRD_PARTY_DIR}/libigl/include)
 set(NANOGUI_BUILD_EXAMPLE OFF CACHE BOOL " " FORCE)
 set(NANOGUI_BUILD_PYTHON  OFF CACHE BOOL " " FORCE)
 set(NANOGUI_INSTALL       OFF CACHE BOOL " " FORCE)
+#set(NANOGUI_USE_GLAD OFF CACHE BOOL " " FORCE)
+#set(NANOGUI_USE_GLAD_DEFAULT OFF CACHE BOOL " " FORCE)
 
 # Add the configurations from nanogui
 add_subdirectory(${THIRD_PARTY_DIR}/libigl/external/nanogui)
-set_target_properties(nanogui-obj PROPERTIES COMPILE_FLAGS -Wno-deprecated-declarations)
-set_target_properties(nanogui PROPERTIES COMPILE_FLAGS -Wno-deprecated-declarations)
+if (NOT WIN32)
+	set_target_properties(nanogui-obj PROPERTIES COMPILE_FLAGS -Wno-deprecated-declarations)
+	set_target_properties(nanogui PROPERTIES COMPILE_FLAGS -Wno-deprecated-declarations)
+endif()
 
 include_directories(${THIRD_PARTY_DIR}/libigl/external/nanogui/include)
 
@@ -79,6 +83,27 @@ MESSAGE(STATUS "EIGEN3_INCLUDE_DIR: ${EIGEN3_INCLUDE_DIR}")
 include_directories(${THIRD_PARTY_DIR}/nanoflann/include)
 
 # ################################################################ #
+# GLEW
+# ################################################################ #
+
+if (WIN32)
+    set(GLEW_DIR "${THIRD_PARTY_DIR}/glew-2.0.0")
+    if (NOT EXISTS GLEW_DIR)
+    	MESSAGE(FATAL Glew directory does not exist: ${GLEW_DIR})
+    endif()
+    set(GLEW_LIBRARIES "glew32s")
+    set(GLEW_INCLUDE_DIRS "${GLEW_DIR}/include")
+    link_libraries(${GLEW_DIR}/lib/Release/x64)
+else()
+	set(GLEW_STATIC)
+	find_package(GLEW REQUIRED)
+	if (NOT DEFINED GLEW_LIBRARIES)
+		MESSAGE(FATAL "GLEW LIBRARIES variable not filled...")
+	endif()
+endif()
+include_directories(${GLEW_INCLUDE_DIRS})
+
+# ################################################################ #
 # Project
 # ################################################################ #
 
@@ -90,12 +115,22 @@ set(SOURCE_FILES
 # Create program
 add_executable(iglFramework ${SOURCE_FILES})
 
-# Add define
+# Add defines
 target_compile_definitions(iglFramework PUBLIC -DNANOVG_GL3_IMPLEMENTATION)
-set_target_properties(iglFramework PROPERTIES COMPILE_FLAGS -Wno-deprecated-declarations)
+if (WIN32)
+	target_compile_definitions(iglFramework PUBLIC -DGLFW_INCLUDE_NONE -DNDEBUG -D_CONSOLE -D_USE_MATH_DEFINES -D_CRT_SECURE_NO_WARNINGS -DGLEW_STATIC)
+endif()
+
+if (NOT WIN32)
+	set_target_properties(iglFramework PROPERTIES COMPILE_FLAGS -Wno-deprecated-declarations)
+endif()
 
 # Link dependency libraries
-target_link_libraries(iglFramework nanogui ${NANOGUI_EXTRA_LIBS} GLEW)
+target_link_libraries(iglFramework 
+	nanogui 
+	${NANOGUI_EXTRA_LIBS} 
+	${GLEW_LIBRARIES}
+)
 
 # Untested!
 # Optional to compile IGL: http://libigl.github.io/libigl/optional/
