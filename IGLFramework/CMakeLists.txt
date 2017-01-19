@@ -86,15 +86,16 @@ include_directories(${THIRD_PARTY_DIR}/nanoflann/include)
 # GLEW
 # ################################################################ #
 
-if (WIN32)
-    set(GLEW_DIR "${THIRD_PARTY_DIR}/glew-2.0.0")
-    if (NOT EXISTS GLEW_DIR)
-    	MESSAGE(FATAL Glew directory does not exist: ${GLEW_DIR})
-    endif()
-    set(GLEW_LIBRARIES "glew32s")
-    set(GLEW_INCLUDE_DIRS "${GLEW_DIR}/include")
-    link_libraries(${GLEW_DIR}/lib/Release/x64)
-else()
+#if (WIN32)
+#    set(GLEW_DIR "${THIRD_PARTY_DIR}/glew-2.0.0")
+#    if (NOT EXISTS GLEW_DIR)
+#    	MESSAGE(FATAL Glew directory does not exist: ${GLEW_DIR})
+#    endif()
+#    set(GLEW_LIBRARIES "glew32s")
+#    set(GLEW_INCLUDE_DIRS "${GLEW_DIR}/include")
+#    link_libraries(${GLEW_DIR}/lib/Release/x64)
+#else()
+if (NOT WIN32)
 	set(GLEW_STATIC)
 	find_package(GLEW REQUIRED)
 	if (NOT DEFINED GLEW_LIBRARIES)
@@ -131,6 +132,13 @@ target_link_libraries(iglFramework
 	${NANOGUI_EXTRA_LIBS} 
 	${GLEW_LIBRARIES}
 )
+
+if (WIN32)
+	add_custom_command(TARGET iglFramework POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E
+	copy_if_different "${CMAKE_CURRENT_BINARY_DIR}/3rdparty/libigl/external/nanogui/${CMAKE_BUILD_TYPE}/nanogui.dll"
+	$<TARGET_FILE_DIR:iglFramework>/nanogui.dll)
+endif()
 
 # Untested!
 # Optional to compile IGL: http://libigl.github.io/libigl/optional/

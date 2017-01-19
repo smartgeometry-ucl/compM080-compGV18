@@ -14,7 +14,7 @@ IF %ERRORLEVEL% NEQ 0 (
 )
 
 IF NOT EXIST "3rdparty/libigl" (
-    git clone https://github.com/libigl/libigl.git 3rdparty/libigl
+    git clone https://github.com/smartgeometry-ucl/libigl.git 3rdparty/libigl
 )
 
 IF NOT EXIST "3rdparty/libigl/external/nanogui/ext" (
@@ -27,4 +27,4 @@ cd build
 rm CMakeCache.txt
 cmake -G "Visual Studio 14 2015 Win64" ..
 cmake --build . --config RelWithDebInfo
-cd ..
+RelWithDebInfo\iglFramework.exe ../3rdparty/libigl/tutorial/shared/bunny.off

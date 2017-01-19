@@ -2,9 +2,9 @@
 #include "nanogui/screen.h"
 
 #include "igl/readOFF.h"
-#ifdef _WIN32
-	#include "nanogui/opengl.h"
-#endif
+//#ifdef _WIN32
+//	#include "nanogui/opengl.h"
+//#endif
 #include "igl/viewer/Viewer.h"
 
 #include <iostream>
@@ -138,7 +138,7 @@ int main(int argc, char *argv[]) {
     enum Orientation { Up=0, Down, Left, Right } dir = Up;
 
     // Load a mesh in OFF format
-    std::string meshPath = "../../3rdparty/libigl/tutorial/shared/bunny.off";
+    std::string meshPath = "../3rdparty/libigl/tutorial/shared/bunny.off";
     if (argc > 1)
         meshPath = std::string(argv[1]);
     igl::readOFF(meshPath, V, F);
