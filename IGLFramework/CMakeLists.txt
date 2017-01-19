@@ -108,10 +108,15 @@ include_directories(${GLEW_INCLUDE_DIRS})
 # Project
 # ################################################################ #
 
+include_directories(include)
+
 # List of source files
 set(SOURCE_FILES
     src/main.cpp
-    )
+	include/acq/typedefs.h
+	include/acq/normalEstimation.h
+	include/acq/impl/normalEstimation.hpp
+	src/normalEstimation.cpp)
 
 # Create program
 add_executable(iglFramework ${SOURCE_FILES})
