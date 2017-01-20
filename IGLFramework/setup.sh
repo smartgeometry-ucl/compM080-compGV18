@@ -14,4 +14,4 @@ fi
 
 cmake ..
 make -j8
-./iglFramework ./3rdparty/libigl/tutorial/shared/bunny.off
+./iglFramework ../3rdparty/libigl/tutorial/shared/bunny.off
