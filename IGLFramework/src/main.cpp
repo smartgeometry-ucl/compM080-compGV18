@@ -195,7 +195,10 @@ int main(int argc, char *argv[]) {
         cloudManager.addCloud(acq::DecoratedCloud(V, F));
 
         // Show mesh
-        viewer.data.set_mesh(V, F);
+        viewer.data.set_mesh(
+            cloudManager.getCloud(0).getVertices(),
+            cloudManager.getCloud(0).getFaces()
+        );
 
         // Calculate normals on launch
         cloudManager.getCloud(0).setNormals(
@@ -203,6 +206,13 @@ int main(int argc, char *argv[]) {
                 /* [in]      K-neighbours for FLANN: */ kNeighbours,
                 /* [in]             Vertices matrix: */ cloudManager.getCloud(0).getVertices()
             )
+        );
+
+        // Update viewer
+        acq::setViewerNormals(
+            viewer,
+            cloudManager.getCloud(0).getVertices(),
+            cloudManager.getCloud(0).getNormals()
         );
     } //...read mesh
 
@@ -213,12 +223,18 @@ int main(int argc, char *argv[]) {
             &floatVariable, &boolVariable, &dir
         ] (igl::viewer::Viewer& viewer)
     {
+        // Add an additional menu window
+        viewer.ngui->addWindow(Eigen::Vector2i(220,10),"Acquisition3D");
         // Add new group
-        viewer.ngui->addGroup("Acquisition3D");
+        //viewer.ngui->addGroup("Acquisition3D");
+
+
+        // Add new group
+        viewer.ngui->addGroup("Nearest neighbours (pointcloud, FLANN)");
 
         // Add k-neighbours variable to GUI
         viewer.ngui->addVariable<int>(
-            /* Displayed name: */ "kNeighbours",
+            /* Displayed name: */ "k-neighbours",
 
             /*  Setter lambda: */ [&] (int val) {
                 // Store reference to current cloud (id 0 for now)
@@ -248,45 +264,31 @@ int main(int argc, char *argv[]) {
             } //...getter lambda
         ); //...addVariable(kNeighbours)
 
-        // Add a button for estimating normals using faces as neighbourhood
+        // Add a button for estimating normals using FLANN as neighbourhood
+        // same, as changing kNeighbours
         viewer.ngui->addButton(
-            /* Displayed label: */ "Estimate normals (from faces)",
+            /* displayed label: */ "estimate normals (flann)",
 
-            /* Lambda to call: */ [&]() {
-                // Store reference to current cloud (id 0 for now)
+            /* lambda to call: */ [&]() {
+                // store reference to current cloud (id 0 for now)
                 acq::DecoratedCloud &cloud = cloudManager.getCloud(0);
 
-                // Check, if normals already exist
-                if (!cloud.hasNormals())
-                    cloud.setNormals(
-                        acq::recalcNormals(
-                            kNeighbours,
-                            cloud.getVertices()
-                        )
-                    );
-
-                // Estimate neighbours using FLANN
-                acq::NeighboursT const neighbours =
-                    acq::calculateCloudNeighboursFromFaces(
-                        /* [in] Faces: */ cloud.getFaces()
-                    );
-
-                // Estimate normals for points in cloud vertices
+                // calculate normals for cloud and update viewer
                 cloud.setNormals(
-                    acq::calculateCloudNormals(
-                        /* [in]               Cloud: */ cloud.getVertices(),
-                        /* [in] Lists of neighbours: */ neighbours
+                    acq::recalcNormals(
+                        /* [in]      k-neighbours for flann: */ kNeighbours,
+                        /* [in]             vertices matrix: */ cloud.getVertices()
                     )
                 );
 
-                // Update viewer
+                // update viewer
                 acq::setViewerNormals(
-                    /* [in, out] Viewer to update: */ viewer,
-                    /* [in]            Pointcloud: */ cloud.getVertices(),
-                    /* [in] Normals of Pointcloud: */ cloud.getNormals()
+                    /* [in, out] viewer to update: */ viewer,
+                    /* [in]            pointcloud: */ cloud.getVertices(),
+                    /* [in] normals of pointcloud: */ cloud.getNormals()
                 );
             } //...button push lambda
-        ); //...estimate normals from faces
+        ); //...estimate normals using FLANN
 
         // Add a button for orienting normals using FLANN
         viewer.ngui->addButton(
@@ -329,6 +331,50 @@ int main(int argc, char *argv[]) {
             } //...lambda to call on buttonclick
         ); //...addButton(orientFLANN)
 
+
+        // Add new group
+        viewer.ngui->addGroup("Connectivity from faces ");
+
+        // Add a button for estimating normals using faces as neighbourhood
+        viewer.ngui->addButton(
+            /* Displayed label: */ "Estimate normals (from faces)",
+
+            /* Lambda to call: */ [&]() {
+                // Store reference to current cloud (id 0 for now)
+                acq::DecoratedCloud &cloud = cloudManager.getCloud(0);
+
+                // Check, if normals already exist
+                if (!cloud.hasNormals())
+                    cloud.setNormals(
+                        acq::recalcNormals(
+                            kNeighbours,
+                            cloud.getVertices()
+                        )
+                    );
+
+                // Estimate neighbours using FLANN
+                acq::NeighboursT const neighbours =
+                    acq::calculateCloudNeighboursFromFaces(
+                        /* [in] Faces: */ cloud.getFaces()
+                    );
+
+                // Estimate normals for points in cloud vertices
+                cloud.setNormals(
+                    acq::calculateCloudNormals(
+                        /* [in]               Cloud: */ cloud.getVertices(),
+                        /* [in] Lists of neighbours: */ neighbours
+                    )
+                );
+
+                // Update viewer
+                acq::setViewerNormals(
+                    /* [in, out] Viewer to update: */ viewer,
+                    /* [in]            Pointcloud: */ cloud.getVertices(),
+                    /* [in] Normals of Pointcloud: */ cloud.getNormals()
+                );
+            } //...button push lambda
+        ); //...estimate normals from faces
+
         // Add a button for orienting normals using face information
         viewer.ngui->addButton(
             /* Displayed label: */ "Orient normals (faces)",
@@ -363,6 +409,43 @@ int main(int argc, char *argv[]) {
             } //...lambda to call on buttonclick
         ); //...addButton(orientFromFaces)
 
+
+        // Add new group
+        viewer.ngui->addGroup("Util");
+
+        // Add a button for flipping normals
+        viewer.ngui->addButton(
+            /* Displayed label: */ "Flip normals",
+            /*  Lambda to call: */ [&](){
+                // Store reference to current cloud (id 0 for now)
+                acq::DecoratedCloud &cloud = cloudManager.getCloud(0);
+
+                // Flip normals
+                cloud.getNormals() *= -1.f;
+
+                // Update viewer
+                acq::setViewerNormals(
+                    /* [in, out] Viewer to update: */ viewer,
+                    /* [in]            Pointcloud: */ cloud.getVertices(),
+                    /* [in] Normals of Pointcloud: */ cloud.getNormals()
+                );
+            } //...lambda to call on buttonclick
+        );
+
+        // Add a button for setting estimated normals for shading
+        viewer.ngui->addButton(
+            /* Displayed label: */ "Set shading normals",
+            /*  Lambda to call: */ [&](){
+
+                // Store reference to current cloud (id 0 for now)
+                acq::DecoratedCloud &cloud = cloudManager.getCloud(0);
+
+                // Set normals to be used by viewer
+                viewer.data.set_normals(cloud.getNormals());
+
+            } //...lambda to call on buttonclick
+        );
+
         // ------------------------
         // Dummy libIGL/nanoGUI API demo stuff:
         // ------------------------
@@ -394,17 +477,11 @@ int main(int argc, char *argv[]) {
             std::cout << "Hello\n";
         });
 
-        // Add an additional menu window
-        //viewer.ngui->addWindow(Eigen::Vector2i(220,10),"New Window");
-
-        // Expose the same variable directly ...
-        //viewer.ngui->addVariable("float",floatVariable);
-
         // Generate menu
         viewer.screen->performLayout();
 
         return false;
-    }; //...viewerr menu
+    }; //...viewer menu
 
 
     // Start viewer

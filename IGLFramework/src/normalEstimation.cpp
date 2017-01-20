@@ -8,7 +8,6 @@
 
 #include "nanoflann/nanoflann.hpp"  // Nearest neighbour lookup in a pointcloud
 
-
 #include <queue>
 #include <set>
 #include <iostream>
@@ -121,55 +120,70 @@ orientCloudNormals(
     NeighboursT const& neighbours,
     NormalsT         & normals
 ) {
+    if (!normals.size()) {
+        std::cerr << "[orientCloudNormals] No normals to work on...\n";
+        return -1;
+    }
+
     // List of points to visit
     std::queue<int> queue;
     // Quick-lookup unique container of already visited points
     std::set<int> visited;
 
-    // Initialize list with one point
-    queue.push(rand() % normals.size()); // TODO: pick point with low curvature
-    // Set visited
-    visited.insert(queue.front());
-
     // Count changes
     int nFlips = 0;
-    // While points to visit exist
-    while (!queue.empty()) {
-        // Read next point from queue
-        int const pointId = queue.front();
-        // Remove point from queue
-        queue.pop();
 
-        // Fetch neighbours
-        NeighboursT::const_iterator const iter = neighbours.find(pointId);
-        // Check, if any neighbours
-        if (iter == neighbours.end()) {
-            std::cerr << "Could not find neighbours of point " << pointId << "\n";
-            continue;
-        }
+    while (visited.size() != normals.size()) {
+        // Traverse a connected component
+        if (queue.empty()) {
+            if (!visited.size()) {
+                // Initialize queue with one random point
+                queue.push(rand() % normals.size()); // TODO: pick point with low curvature
+            } else {
+                // Expand queue with first unvisited point
+                for (int i = 0; i != normals.size() && queue.empty(); ++i) {
+                    // if unvisited, use
+                    if (visited.find(i) == visited.end())
+                        queue.push(i); // enqueue
+                } //...for each point
+            } //...next component
 
-        for (int const neighbourId : iter->second) {
-            // If unvisited
-            if (visited.find(neighbourId) == visited.end()) {
-                // Enqueue for next level
-                queue.push(neighbourId);
-                // Mark visited
-                visited.insert(neighbourId);
+            // Set visited
+            visited.insert(queue.front());
+        } //...if queue empty
 
-                // Flip neighbour normal, if not same direction as precursor point
-                if (normals.row(pointId).dot(normals.row(neighbourId)) < 0.f) {
-                    normals.row(neighbourId) *= -1.f;
-                    ++nFlips;
-                } else {
-                    std::cout << "compared " << pointId << ", and " << neighbourId << ":\n\t"
-                              << normals.row(pointId)
-                              << " and " << normals.row(neighbourId)
-                              << ": " << normals.row(pointId).dot(normals.row(neighbourId))
-                              << "\n";
-                }
-            } //...if neighbour unvisited
-        } //...for each neighbour of point
-    } //...while points in queue
+        // While points to visit exist
+        while (!queue.empty()) {
+            // Read next point from queue
+            int const pointId = queue.front();
+            // Remove point from queue
+            queue.pop();
+
+            // Fetch neighbours
+            NeighboursT::const_iterator const iter = neighbours.find(pointId);
+            // Check, if any neighbours
+            if (iter == neighbours.end()) {
+                //std::cerr << "Could not find neighbours of point " << pointId << "\n";
+                continue;
+            }
+
+            for (int const neighbourId : iter->second) {
+                // If unvisited
+                if (visited.find(neighbourId) == visited.end()) {
+                    // Enqueue for next level
+                    queue.push(neighbourId);
+                    // Mark visited
+                    visited.insert(neighbourId);
+
+                    // Flip neighbour normal, if not same direction as precursor point
+                    if (normals.row(pointId).dot(normals.row(neighbourId)) < 0.f) {
+                        normals.row(neighbourId) *= -1.f;
+                        ++nFlips;
+                    }
+                } //...if neighbour unvisited
+            } //...for each neighbour of point
+        } //...while points in queue
+    }
 
     return nFlips;
 } //...orientCloudNormals()

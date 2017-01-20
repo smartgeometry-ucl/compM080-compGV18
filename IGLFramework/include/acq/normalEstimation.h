@@ -10,7 +10,8 @@
 
 namespace acq {
 
-/** \brief Estimates the normal of a single point given its ID and the ID of its neighbours.
+/** \brief Estimates the normal of a single point
+ *         given its ID and the ID of its neighbours.
  *
  * \param[in] cloud             N x 3 matrix containing points in rows.
  * \param[in] pointIndex        Row-index of point.
@@ -26,7 +27,8 @@ calculatePointNormal(
     _NeighbourIdListT const& neighbourIndices);
 
 
-/** \brief Estimates the neighbours of all points in cloud returning \p k neighbours max each.
+/** \brief Estimates the neighbours of all points in cloud
+ *         returning \p k neighbours max each.
  *
  * \param[in] k         How many neighbours too look for in point.
  * \param[in] maxLeafs  FLANN parameter, maximum kdTree depth.

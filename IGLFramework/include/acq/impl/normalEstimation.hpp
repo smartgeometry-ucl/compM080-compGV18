@@ -33,11 +33,8 @@ calculatePointNormal(
     // For each neighbouring point
     for (auto const neighbourIndex : neighbourIndices) {
 
-        // Warn, if first neighbour is same point
+        // Skip, if first neighbour is same point
         if (pointIndex == neighbourIndex) {
-            std::cerr << "same index..."
-                      << pointIndex << " vs "
-                      << neighbourIndex << "\n";
             continue;
         } //...if same index
 
@@ -82,23 +79,34 @@ calculateCloudNeighboursFromFaces(
     // for each face
     for (int row = 0; row != faces.rows(); ++row) {
         // for each face vertex
-        for (int col = 0; col != faces.cols(); ++col) {
+        for (int vxId = 0; vxId != faces.cols(); ++vxId) {
             // id of "incoming" edge's start vertex
             int const leftNeighbourId =
-                (col != 0) ? col - 1
+                (vxId != 0) ? vxId - 1
                            : faces.cols() - 1;
             // id of "outgoing" edge's end vertex
             int const rightNeighbourId =
-                (col < faces.cols() - 1) ? col + 1
+                (vxId < faces.cols() - 1) ? vxId + 1
                                          : 0;
-            neighbours[faces(row, col)].insert(
+            // store vertex has left neighbour as neighbour
+            neighbours[faces(row, vxId)].insert(
                 faces(row, leftNeighbourId)
             );
-            neighbours[faces(row, col)].insert(
+            // store left neighbour has vertex as neighbour
+            neighbours[faces(row, leftNeighbourId)].insert(
+                faces(row, vxId)
+            );
+            // store vertex has right neighbour as neighbour
+            neighbours[faces(row, vxId)].insert(
                 faces(row, rightNeighbourId)
             );
-        }
-    }
+            // store right neighbour has vertex as neighbour
+            neighbours[faces(row, rightNeighbourId)].insert(
+                faces(row, vxId)
+            );
+        } //...for each vertex in face
+    } //...for each face
+
     return neighbours;
 } //...orientCloudNormalsFromFaces()
 
