@@ -41,3 +41,8 @@ git clone http://github.com/smartgeometry-ucl/compM080-compGV18
 cd IGLFramework
 ./setup.sh
 ```
+
+---
+# Example
+
+![Example](example.png)
