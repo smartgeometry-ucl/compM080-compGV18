@@ -1,5 +1,5 @@
 //
-// Created by bontius on 19/01/17.
+// Created by Aron Monszpart on 19/01/17.
 //
 
 #ifndef ACQ_TYPEDEFS_H
@@ -18,6 +18,7 @@
 //EIGEN_DEFINE_STL_VECTOR_SPECIALIZATION(Eigen::Vector4d)
 
 #include <map>
+#include <set>
 
 namespace acq {
 
@@ -25,10 +26,12 @@ namespace acq {
 typedef Eigen::MatrixXd CloudT;
 //! Dynamically sized matrix of vectors in rows, a list of normals.
 typedef Eigen::MatrixXd NormalsT;
+//! Dynamically sized matrix of face vertex indices in rows.
+typedef Eigen::MatrixXi FacesT;
 
 //! An associative storage of neighbour indices for point cloud
 //! { pointId => [neighbourId_0, nId_1, ... nId_k-1] }
-typedef std::map<int, std::vector<size_t> > NeighboursT;
+typedef std::map<int, std::set<size_t> > NeighboursT;
 
 } //...ns acq
 

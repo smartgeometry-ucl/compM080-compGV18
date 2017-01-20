@@ -5,6 +5,12 @@ git submodule update --init --recursive .
 cd ../../../..
 mkdir build
 cd build
+
+if [[ $OSTYPE == darwin* ]];
+then
+    export PATH="/Applications/CMake.app/Contents/bin":${PATH}
+fi
+
 cmake ..
 make -j8
 IGLFramework/iglFramework ../3rdparty/libigl/tutorial/shared/bunny.off

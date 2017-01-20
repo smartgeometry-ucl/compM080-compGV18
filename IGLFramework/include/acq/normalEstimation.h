@@ -1,5 +1,5 @@
 //
-// Created by bontius on 19/01/17.
+// Created by Aron Monszpart on 19/01/17.
 //
 
 #ifndef ACQ_NORMALESTIMATION_H
@@ -18,11 +18,12 @@ namespace acq {
  *
  * \return A 3D vector that is the normal of point with ID \p pointIndex.
  */
+template <typename _NeighbourIdListT>
 Eigen::Matrix <typename CloudT::Scalar, 3, 1>
 calculatePointNormal(
-    CloudT               const& cloud,
-    int                  const  pointIndex,
-    std::vector <size_t> const& neighbourIndices);
+    CloudT            const& cloud,
+    int               const  pointIndex,
+    _NeighbourIdListT const& neighbourIndices);
 
 
 /** \brief Estimates the neighbours of all points in cloud returning \p k neighbours max each.
@@ -50,10 +51,23 @@ calculateCloudNormals(
     CloudT               const& cloud,
     NeighboursT          const& neighbours);
 
-void
+int
 orientCloudNormals(
     NeighboursT const& neighbours,
     NormalsT         & normals);
+
+template <typename _FacesT>
+NeighboursT
+calculateCloudNeighboursFromFaces(
+    _FacesT   const& faces
+);
+
+template <typename _NormalsT, typename _FacesT>
+int
+orientCloudNormalsFromFaces(
+    _FacesT     const& faces,
+    _NormalsT        & normals);
+
 
 } //...ns acq
 
