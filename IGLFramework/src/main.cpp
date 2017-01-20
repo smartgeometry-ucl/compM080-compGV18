@@ -1,4 +1,6 @@
 #include "acq/normalEstimation.h"
+#include "acq/decoratedCloud.h"
+#include "acq/cloudManager.h"
 
 #include "nanogui/formhelper.h"
 #include "nanogui/screen.h"
@@ -9,90 +11,6 @@
 #include <iostream>
 
 namespace acq {
-
-class DecoratedCloud {
-public:
-    explicit DecoratedCloud() {}
-
-    explicit DecoratedCloud(CloudT const& vertices)
-        : _vertices(vertices)
-    {}
-
-    explicit DecoratedCloud(CloudT const& vertices, FacesT const& faces)
-        : _vertices(vertices), _faces(faces)
-    {}
-
-    explicit DecoratedCloud(CloudT const& vertices, NormalsT const& normals)
-        : _vertices(vertices), _normals(normals)
-    {}
-
-    explicit DecoratedCloud(CloudT const& vertices, FacesT const& faces, NormalsT const& normals)
-        : _vertices(vertices), _faces(faces), _normals(normals)
-    {}
-
-    CloudT const& getVertices() const { return _vertices; }
-    void setVertices(CloudT const& vertices) { _vertices = vertices; }
-    bool hasVertices() const { return static_cast<bool>(_vertices.size()); }
-
-    FacesT const& getFaces() const { return _faces; }
-    void setFaces(FacesT const& faces) { _faces = faces; }
-    bool hasFaces() const { return static_cast<bool>(_faces.size()); }
-
-    NormalsT const& getNormals() const { return _normals; }
-    NormalsT      & getNormals() { return _normals; }
-    void setNormals(NormalsT const& normals) { _normals = normals; }
-    bool hasNormals() const { return static_cast<bool>(_normals.size()); }
-
-protected:
-    CloudT   _vertices;
-    FacesT   _faces;
-    NormalsT _normals;
-
-public:
-    // See https://eigen.tuxfamily.org/dox-devel/group__TopicStructHavingEigenMembers.html
-    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-};
-
-class CloudManager {
-public:
-    void addCloud(DecoratedCloud const& cloud) {
-        _clouds.push_back(cloud);
-    } //...addCloud
-
-    void setCloud(DecoratedCloud const& cloud, int index) {
-        if (index >= _clouds.size()) {
-            if (index != _clouds.size())
-                std::cerr << "[CloudManager::setCloud] "
-                          << "Warning, creating " << index - _clouds.size()
-                          << " empty clouds when inserting to index " << index
-                          << ", current size is " << _clouds.size()
-                          << "...why not use addCloud?\n";
-            _clouds.resize(index + 1);
-        }
-
-        _clouds.at(index) = cloud;
-    } //...setCloud()
-
-    DecoratedCloud& getCloud(int index) {
-        if (index < _clouds.size())
-            return _clouds.at(index);
-        else {
-            std::cerr << "Cannot return cloud with id " << index
-                      << ", only have " << _clouds.size()
-                      << " clouds...returning empty cloud\n";
-            throw new std::runtime_error("No such cloud");
-        }
-    }
-
-    DecoratedCloud const& getCloud(int index) const {
-        return const_cast<DecoratedCloud const&>(
-            const_cast<CloudManager*>(this)->getCloud(index)
-        );
-    }
-
-protected:
-    std::vector<DecoratedCloud> _clouds; //! List of clouds possibly with normals and faces.
-};
 
 /** \brief                 Re-estimate normals of cloud \p V fitting planes
  *                         to the \p kNeighbours nearest neighbours of each point.
@@ -224,10 +142,7 @@ int main(int argc, char *argv[]) {
         ] (igl::viewer::Viewer& viewer)
     {
         // Add an additional menu window
-        viewer.ngui->addWindow(Eigen::Vector2i(220,10),"Acquisition3D");
-        // Add new group
-        //viewer.ngui->addGroup("Acquisition3D");
-
+        viewer.ngui->addWindow(Eigen::Vector2i(740,10), "Acquisition3D");
 
         // Add new group
         viewer.ngui->addGroup("Nearest neighbours (pointcloud, FLANN)");
@@ -267,7 +182,7 @@ int main(int argc, char *argv[]) {
         // Add a button for estimating normals using FLANN as neighbourhood
         // same, as changing kNeighbours
         viewer.ngui->addButton(
-            /* displayed label: */ "estimate normals (flann)",
+            /* displayed label: */ "Estimate normals (FLANN)",
 
             /* lambda to call: */ [&]() {
                 // store reference to current cloud (id 0 for now)
@@ -377,7 +292,7 @@ int main(int argc, char *argv[]) {
 
         // Add a button for orienting normals using face information
         viewer.ngui->addButton(
-            /* Displayed label: */ "Orient normals (faces)",
+            /* Displayed label: */ "Orient normals (from faces)",
 
             /* Lambda to call: */ [&]() {
                 // Store reference to current cloud (id 0 for now)

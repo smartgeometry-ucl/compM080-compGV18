@@ -16,7 +16,7 @@ namespace acq {
 template <typename _NeighbourIdListT>
 Eigen::Matrix <typename CloudT::Scalar, 3, 1>
 calculatePointNormal(
-    CloudT            const& cloud,
+    CloudT            const& cloud, // N x 3
     int               const  pointIndex,
     _NeighbourIdListT const& neighbourIndices
 ) {
@@ -51,7 +51,7 @@ calculatePointNormal(
     Eigen::SelfAdjointEigenSolver <Matrix3> es(cov);
 
     // Find index of smallest eigen value
-    int const smallestEigenValueId =
+    int const smallestEigenValueId = // 0, 1 2
         static_cast<int>(
             std::distance(
                 es.eigenvalues().data(),

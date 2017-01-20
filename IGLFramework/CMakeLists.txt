@@ -116,7 +116,7 @@ set(SOURCE_FILES
 	include/acq/typedefs.h
 	include/acq/normalEstimation.h
 	include/acq/impl/normalEstimation.hpp
-	src/normalEstimation.cpp)
+	src/normalEstimation.cpp include/acq/impl/decoratedCloud.hpp include/acq/decoratedCloud.h include/acq/cloudManager.h include/acq/impl/cloudManager.hpp src/decoratedCloud.cpp src/cloudManager.cpp)
 
 # Create program
 add_executable(iglFramework ${SOURCE_FILES})

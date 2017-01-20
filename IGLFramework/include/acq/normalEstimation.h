@@ -10,6 +10,10 @@
 
 namespace acq {
 
+/** \addtogroup NormalEstimation
+ *  @{
+ */
+
 /** \brief Estimates the normal of a single point
  *         given its ID and the ID of its neighbours.
  *
@@ -53,23 +57,50 @@ calculateCloudNormals(
     CloudT               const& cloud,
     NeighboursT          const& neighbours);
 
+/** \brief Breadth-first-search to orient normals consistently
+ *         using the provided neighbourhood information.
+ *
+ * \param[in]     neighbours A directed list of neighbour indices.
+ * \param[in,out] normals    The normals to possibly flip.
+ *
+ * \return The number of normals flipped.
+ */
 int
 orientCloudNormals(
     NeighboursT const& neighbours,
     NormalsT         & normals);
 
+/** \brief Traverses faces and records neighbourhood information using face edges.
+ *
+ * \tparam _FacesT Concept: acq::FacesT aka. Eigen::MatrixXi.
+ *
+ * \param faces Indices of vertices belonging to a face in each row.
+ *
+ * \return The directed neighbourhood information.
+ */
 template <typename _FacesT>
 NeighboursT
 calculateCloudNeighboursFromFaces(
     _FacesT   const& faces
 );
 
+/** \brief Estimates neighbourhood information from faces,
+ *         and then consistently flips normals using BFS traversal.
+ *
+ * \tparam _NormalsT Concept: acq::NormalsT, aka. Eigen::MatrixXd.
+ * \tparam _FacesT   Concept: acq::FacesT, aka. Eigen::MatrixXi.
+ *
+ * \param[in     ] faces  Face vertex indices in rows.
+ * \param[in,out] normals The normals to possibly flip.
+ * \return
+ */
 template <typename _NormalsT, typename _FacesT>
 int
 orientCloudNormalsFromFaces(
     _FacesT     const& faces,
     _NormalsT        & normals);
 
+/** @} (NormalEstimation) */
 
 } //...ns acq
 

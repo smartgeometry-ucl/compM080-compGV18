@@ -29,8 +29,9 @@ typedef Eigen::MatrixXd NormalsT;
 //! Dynamically sized matrix of face vertex indices in rows.
 typedef Eigen::MatrixXi FacesT;
 
-//! An associative storage of neighbour indices for point cloud
-//! { pointId => [neighbourId_0, nId_1, ... nId_k-1] }
+/** \brief An associative storage of neighbour indices for point cloud
+ * { pointId => [neighbourId_0, nId_1, ... nId_k-1] }
+ */
 typedef std::map<int, std::set<size_t> > NeighboursT;
 
 } //...ns acq
