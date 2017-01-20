@@ -12,8 +12,8 @@ COMPM080/GV18: Acquisition and Processing of 3D Geometry exapmle code for visual
 
 ## OSX
 You'll need to install GLEW using
-* [Homebrew](http://brew.sh/) `sudo port install glew +universal` &nbsp; &nbsp; &nbsp;or
-* [MacPorts](https://www.macports.org/) `brew install glew`.
+* [Homebrew](http://brew.sh/) `brew install glew` &nbsp; &nbsp; &nbsp;or
+* [MacPorts](https://www.macports.org/) `sudo port install glew +universal`.
 
 ## Unix
 * Ubuntu: `sudo apt-get install cmake git xorg-dev libglew-dev libgl1-mesa-dev`
