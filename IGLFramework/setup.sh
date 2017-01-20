@@ -14,10 +14,4 @@ fi
 
 cmake ..
 make -j8
-
-if [[ $OSTYPE == darwin* ]];
-then
-    build/iglFramework 3rdparty/libigl/tutorial/shared/bunny.off
-else
-    iglFramework ../../3rdparty/libigl/tutorial/shared/bunny.off
-fi
+./iglFramework ./3rdparty/libigl/tutorial/shared/bunny.off
