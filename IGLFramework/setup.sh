@@ -31,4 +31,14 @@ then
 fi
 
 # Run executable generated
-./iglFramework ../3rdparty/libigl/tutorial/shared/bunny.off
+if [ -e iglFramework ];
+then
+    echo -e "\n\nRunning ./iglFramework ../3rdparty/libigl/tutorial/shared/bunny.off\n"
+    ./iglFramework ../3rdparty/libigl/tutorial/shared/bunny.off
+elif [ -e IGLFramework/iglFramework ];
+then
+    echo -e "\n\nRunning IGLFramework/iglFramework ../3rdparty/libigl/tutorial/shared/bunny.off\n"
+    IGLFramework/iglFramework ../3rdparty/libigl/tutorial/shared/bunny.off
+else
+    echo "Could not find any executable to run..."
+fi
