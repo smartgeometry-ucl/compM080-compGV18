@@ -18,6 +18,7 @@ NeighboursT
 calculateCloudNeighbours(
     CloudT  const& cloud,
     int     const  k,
+    float   const  maxDist,
     int     const  maxLeafs
 ) {
     // Floating point type
@@ -30,6 +31,9 @@ calculateCloudNeighbours(
         /* Space dimensionality: */ Dim,
         /*      Distance metric: */ nanoflann::metric_L2
     > KdTreeWrapperT;
+
+    // Squared max distance
+    float const maxDistSqr = maxDist * maxDist;
 
     // Safety check dimensionality
     if (cloud.cols() != Dim) {
@@ -45,7 +49,7 @@ calculateCloudNeighbours(
 
     // Neighbour indices
     std::vector<size_t> neighbourIndices(k);
-    std::vector<Scalar> out_dists_sqr(k);
+    std::vector<Scalar> distsSqr(k);
 
     // Placeholder structure for nanoFLANN
     nanoflann::KNNResultSet <Scalar> resultSet(k);
@@ -55,7 +59,7 @@ calculateCloudNeighbours(
     // For each point, store normal
     for (int pointId = 0; pointId != cloud.rows(); ++pointId) {
         // Initialize nearest neighhbour estimation
-        resultSet.init(&neighbourIndices[0], &out_dists_sqr[0]);
+        resultSet.init(&neighbourIndices[0], &distsSqr[0]);
 
         // Make sure it's ok to expose raw data pointer of point
         static_assert(
@@ -70,15 +74,21 @@ calculateCloudNeighbours(
             /*    How many neighbours to use: */ nanoflann::SearchParams(k)
         );
 
+        // Filter neighbours by squared distance
+        NeighboursT::mapped_type currNeighbours;
+        for (int i = 0; i != neighbourIndices.size(); ++i) {
+            // if not same point and close enough
+            if ((neighbourIndices[i] != pointId   ) &&
+                (distsSqr        [i] <  maxDistSqr))
+                currNeighbours.insert(neighbourIndices[i]);
+        }
+
         // Store list of neighbours
         std::pair<NeighboursT::iterator, bool> const success =
             neighbours.insert(
                 std::make_pair(
                     pointId,
-                    NeighboursT::mapped_type( // aka. std::set<int>
-                        neighbourIndices.begin(),
-                        neighbourIndices.end()
-                    )
+                    currNeighbours
                 )
             );
 

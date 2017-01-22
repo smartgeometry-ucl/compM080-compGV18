@@ -6,6 +6,7 @@
 #define ACQ_NORMALESTIMATION_H
 
 #include "acq/typedefs.h"
+#include <limits.h>
 #include <vector>
 
 namespace acq {
@@ -35,6 +36,7 @@ calculatePointNormal(
  *         returning \p k neighbours max each.
  *
  * \param[in] k         How many neighbours too look for in point.
+ * \param[in] maxDist   Maximum distance between vertex and neighbour.
  * \param[in] maxLeafs  FLANN parameter, maximum kdTree depth.
  *
  * \return An associative container with the varying length lists of neighbours.
@@ -43,6 +45,7 @@ NeighboursT
 calculateCloudNeighbours(
     CloudT               const& cloud,
     int                  const  k,
+    float                const  maxDist = std::sqrt(std::numeric_limits<float>::max()) - 1.f,
     int                  const  maxLeafs = 10);
 
 /** \brief Estimates the normals of all points in cloud using \p k neighbours max each.

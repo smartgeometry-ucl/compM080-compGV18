@@ -12,22 +12,25 @@
 
 namespace acq {
 
-/** \brief                 Re-estimate normals of cloud \p V fitting planes
- *                         to the \p kNeighbours nearest neighbours of each point.
- * \param[in ] kNeighbours How many neighbours to use (Typiclaly: 5..15)
- * \param[in ] vertices    Input pointcloud. Nx3, where N is the number of points.
- * \param[out] viewer      The viewer to show the normals at.
- * \return                 The estimated normals, Nx3.
+/** \brief                      Re-estimate normals of cloud \p V fitting planes
+ *                              to the \p kNeighbours nearest neighbours of each point.
+ * \param[in ] kNeighbours      How many neighbours to use (Typiclaly: 5..15)
+ * \param[in ] vertices         Input pointcloud. Nx3, where N is the number of points.
+ * \param[in ] maxNeighbourDist Maximum distance between vertex and neighbour.
+ * \param[out] viewer           The viewer to show the normals at.
+ * \return                      The estimated normals, Nx3.
  */
 NormalsT
 recalcNormals(
     int                 const  kNeighbours,
-    CloudT              const& vertices
+    CloudT              const& vertices,
+    float               const  maxNeighbourDist
 ) {
     NeighboursT const neighbours =
         calculateCloudNeighbours(
             /* [in]        cloud: */ vertices,
-            /* [in] k-neighbours: */ kNeighbours
+            /* [in] k-neighbours: */ kNeighbours,
+            /* [in]      maxDist: */ maxNeighbourDist
         );
 
     // Estimate normals for points in cloud vertices
@@ -64,7 +67,9 @@ void setViewerNormals(
 int main(int argc, char *argv[]) {
 
     // How many neighbours to use for normal estimation, shown on GUI.
-    int kNeighbours = 5;
+    int kNeighbours = 10;
+    // Maximum distance between vertices to be considered neighbours (FLANN mode)
+    float maxNeighbourDist = 0.15; //TODO: set to average vertex distance upon read
 
     // Dummy enum to demo GUI
     enum Orientation { Up=0, Down, Left, Right } dir = Up;
@@ -122,7 +127,8 @@ int main(int argc, char *argv[]) {
         cloudManager.getCloud(0).setNormals(
             acq::recalcNormals(
                 /* [in]      K-neighbours for FLANN: */ kNeighbours,
-                /* [in]             Vertices matrix: */ cloudManager.getCloud(0).getVertices()
+                /* [in]             Vertices matrix: */ cloudManager.getCloud(0).getVertices(),
+                /* [in]      max neighbour distance: */ maxNeighbourDist
             )
         );
 
@@ -137,12 +143,12 @@ int main(int argc, char *argv[]) {
     // Extend viewer menu using a lambda function
     viewer.callback_init =
         [
-            &cloudManager, &kNeighbours,
+            &cloudManager, &kNeighbours, &maxNeighbourDist,
             &floatVariable, &boolVariable, &dir
         ] (igl::viewer::Viewer& viewer)
     {
         // Add an additional menu window
-        viewer.ngui->addWindow(Eigen::Vector2i(740,10), "Acquisition3D");
+        viewer.ngui->addWindow(Eigen::Vector2i(900,10), "Acquisition3D");
 
         // Add new group
         viewer.ngui->addGroup("Nearest neighbours (pointcloud, FLANN)");
@@ -162,7 +168,8 @@ int main(int argc, char *argv[]) {
                 cloud.setNormals(
                     acq::recalcNormals(
                         /* [in]      K-neighbours for FLANN: */ kNeighbours,
-                        /* [in]             Vertices matrix: */ cloud.getVertices()
+                        /* [in]             Vertices matrix: */ cloud.getVertices(),
+                        /* [in]      max neighbour distance: */ maxNeighbourDist
                     )
                 );
 
@@ -179,6 +186,39 @@ int main(int argc, char *argv[]) {
             } //...getter lambda
         ); //...addVariable(kNeighbours)
 
+        // Add maxNeighbourDistance variable to GUI
+        viewer.ngui->addVariable<float>(
+            /* Displayed name: */ "maxNeighDist",
+
+            /*  Setter lambda: */ [&] (float val) {
+                // Store reference to current cloud (id 0 for now)
+                acq::DecoratedCloud &cloud = cloudManager.getCloud(0);
+
+                // Store new value
+                maxNeighbourDist = val;
+
+                // Recalculate normals for cloud and update viewer
+                cloud.setNormals(
+                    acq::recalcNormals(
+                        /* [in]      K-neighbours for FLANN: */ kNeighbours,
+                        /* [in]             Vertices matrix: */ cloud.getVertices(),
+                        /* [in]      max neighbour distance: */ maxNeighbourDist
+                    )
+                );
+
+                // Update viewer
+                acq::setViewerNormals(
+                    /* [in, out] Viewer to update: */ viewer,
+                    /* [in]            Pointcloud: */ cloud.getVertices(),
+                    /* [in] Normals of Pointcloud: */ cloud.getNormals()
+                );
+            }, //...setter lambda
+
+            /*  Getter lambda: */ [&]() {
+                return maxNeighbourDist; // get
+            } //...getter lambda
+        ); //...addVariable(kNeighbours)
+
         // Add a button for estimating normals using FLANN as neighbourhood
         // same, as changing kNeighbours
         viewer.ngui->addButton(
@@ -192,7 +232,8 @@ int main(int argc, char *argv[]) {
                 cloud.setNormals(
                     acq::recalcNormals(
                         /* [in]      k-neighbours for flann: */ kNeighbours,
-                        /* [in]             vertices matrix: */ cloud.getVertices()
+                        /* [in]             vertices matrix: */ cloud.getVertices(),
+                        /* [in]      max neighbour distance: */ maxNeighbourDist
                     )
                 );
 
@@ -217,8 +258,9 @@ int main(int argc, char *argv[]) {
                 if (!cloud.hasNormals())
                     cloud.setNormals(
                         acq::recalcNormals(
-                            kNeighbours,
-                            cloud.getVertices()
+                            /* [in]      K-neighbours for FLANN: */ kNeighbours,
+                            /* [in]             Vertices matrix: */ cloud.getVertices(),
+                            /* [in]      max neighbour distance: */ maxNeighbourDist
                         )
                     );
 
@@ -226,7 +268,8 @@ int main(int argc, char *argv[]) {
                 acq::NeighboursT const neighbours =
                     acq::calculateCloudNeighbours(
                         /* [in]        Cloud: */ cloud.getVertices(),
-                        /* [in] k-neighbours: */ kNeighbours
+                        /* [in] k-neighbours: */ kNeighbours,
+                        /* [in]      maxDist: */ maxNeighbourDist
                     );
 
                 // Orient normals in place using established neighbourhood
@@ -262,8 +305,9 @@ int main(int argc, char *argv[]) {
                 if (!cloud.hasNormals())
                     cloud.setNormals(
                         acq::recalcNormals(
-                            kNeighbours,
-                            cloud.getVertices()
+                            /* [in]      K-neighbours for FLANN: */ kNeighbours,
+                            /* [in]             Vertices matrix: */ cloud.getVertices(),
+                            /* [in]      max neighbour distance: */ maxNeighbourDist
                         )
                     );
 
@@ -302,8 +346,9 @@ int main(int argc, char *argv[]) {
                 if (!cloud.hasNormals())
                     cloud.setNormals(
                         acq::recalcNormals(
-                            kNeighbours,
-                            cloud.getVertices()
+                            /* [in]      K-neighbours for FLANN: */ kNeighbours,
+                            /* [in]             Vertices matrix: */ cloud.getVertices(),
+                            /* [in]      max neighbour distance: */ maxNeighbourDist
                         )
                     );
 
