@@ -114,33 +114,41 @@ $(document).ready(function(){initNavTree('classacq_1_1_cloud_manager.html','');}
 <div class="title">acq::CloudManager Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Small class to keep track of multiple point clouds.  
+ <a href="classacq_1_1_cloud_manager.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="cloud_manager_8h_source.html">cloudManager.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a61e9937b62cf29a047ee47d1d0b30d28"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacq_1_1_cloud_manager.html#a61e9937b62cf29a047ee47d1d0b30d28">addCloud</a> (<a class="el" href="classacq_1_1_decorated_cloud.html">DecoratedCloud</a> const &amp;cloud)</td></tr>
+<tr class="memdesc:a61e9937b62cf29a047ee47d1d0b30d28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append a cloud to the list of clouds.  <a href="#a61e9937b62cf29a047ee47d1d0b30d28">More...</a><br /></td></tr>
 <tr class="separator:a61e9937b62cf29a047ee47d1d0b30d28"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad3917533eda9bb6a49676b6b465e6625"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacq_1_1_cloud_manager.html#ad3917533eda9bb6a49676b6b465e6625">setCloud</a> (<a class="el" href="classacq_1_1_decorated_cloud.html">DecoratedCloud</a> const &amp;cloud, int index)</td></tr>
+<tr class="memdesc:ad3917533eda9bb6a49676b6b465e6625"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overwrite a cloud at a specific index.  <a href="#ad3917533eda9bb6a49676b6b465e6625">More...</a><br /></td></tr>
 <tr class="separator:ad3917533eda9bb6a49676b6b465e6625"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee2b8ea1a01fdd4a8fc1a5943e67170e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacq_1_1_decorated_cloud.html">DecoratedCloud</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacq_1_1_cloud_manager.html#aee2b8ea1a01fdd4a8fc1a5943e67170e">getCloud</a> (int index)</td></tr>
-<tr class="separator:aee2b8ea1a01fdd4a8fc1a5943e67170e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb5a511902243032df7e89688acc68ce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacq_1_1_decorated_cloud.html">DecoratedCloud</a> const &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacq_1_1_cloud_manager.html#acb5a511902243032df7e89688acc68ce">getCloud</a> (int index) const </td></tr>
-<tr class="separator:acb5a511902243032df7e89688acc68ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00bf42e8a3faf1f09965ac267e0ff6be"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacq_1_1_decorated_cloud.html">DecoratedCloud</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacq_1_1_cloud_manager.html#a00bf42e8a3faf1f09965ac267e0ff6be">getCloud</a> (int index)</td></tr>
+<tr class="memdesc:a00bf42e8a3faf1f09965ac267e0ff6be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get cloud with specific index.  <a href="#a00bf42e8a3faf1f09965ac267e0ff6be">More...</a><br /></td></tr>
+<tr class="separator:a00bf42e8a3faf1f09965ac267e0ff6be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6db1cb964677f4bde9b3c5e5c9293b23"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacq_1_1_decorated_cloud.html">DecoratedCloud</a> const &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacq_1_1_cloud_manager.html#a6db1cb964677f4bde9b3c5e5c9293b23">getCloud</a> (int index) const </td></tr>
+<tr class="memdesc:a6db1cb964677f4bde9b3c5e5c9293b23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get cloud with specific index (const version).  <a href="#a6db1cb964677f4bde9b3c5e5c9293b23">More...</a><br /></td></tr>
+<tr class="separator:a6db1cb964677f4bde9b3c5e5c9293b23"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:ab26b47211f9b37b9b6088c82ed59242f"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classacq_1_1_decorated_cloud.html">DecoratedCloud</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacq_1_1_cloud_manager.html#ab26b47211f9b37b9b6088c82ed59242f">_clouds</a></td></tr>
+<tr class="memdesc:ab26b47211f9b37b9b6088c82ed59242f"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of clouds possibly with normals and faces.  <a href="#ab26b47211f9b37b9b6088c82ed59242f">More...</a><br /></td></tr>
 <tr class="separator:ab26b47211f9b37b9b6088c82ed59242f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p>Definition at line <a class="el" href="main_8cpp_source.html#l00056">56</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<div class="textblock"><p>Small class to keep track of multiple point clouds. </p>
+
+<p>Definition at line <a class="el" href="cloud_manager_8h_source.html#l00014">14</a> of file <a class="el" href="cloud_manager_8h_source.html">cloudManager.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a61e9937b62cf29a047ee47d1d0b30d28"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void acq::CloudManager::addCloud </td>
@@ -150,75 +158,57 @@ Protected Attributes</h2></td></tr>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="main_8cpp_source.html#l00058">58</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<p>Append a cloud to the list of clouds. </p>
+
+<p>Definition at line <a class="el" href="cloud_manager_8cpp_source.html#l00010">10</a> of file <a class="el" href="cloud_manager_8cpp_source.html">cloudManager.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aee2b8ea1a01fdd4a8fc1a5943e67170e"></a>
+<a class="anchor" id="a00bf42e8a3faf1f09965ac267e0ff6be"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classacq_1_1_decorated_cloud.html">DecoratedCloud</a>&amp; acq::CloudManager::getCloud </td>
+          <td class="memname"><a class="el" href="classacq_1_1_decorated_cloud.html">DecoratedCloud</a> &amp; acq::CloudManager::getCloud </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>index</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="main_8cpp_source.html#l00076">76</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<p>Get cloud with specific index. </p>
+
+<p>Definition at line <a class="el" href="cloud_manager_8cpp_source.html#l00028">28</a> of file <a class="el" href="cloud_manager_8cpp_source.html">cloudManager.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="acb5a511902243032df7e89688acc68ce"></a>
+<a class="anchor" id="a6db1cb964677f4bde9b3c5e5c9293b23"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classacq_1_1_decorated_cloud.html">DecoratedCloud</a> const&amp; acq::CloudManager::getCloud </td>
+          <td class="memname"><a class="el" href="classacq_1_1_decorated_cloud.html">DecoratedCloud</a> const &amp; acq::CloudManager::getCloud </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>index</em></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="main_8cpp_source.html#l00087">87</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<p>Get cloud with specific index (const version). </p>
+
+<p>Definition at line <a class="el" href="cloud_manager_8cpp_source.html#l00039">39</a> of file <a class="el" href="cloud_manager_8cpp_source.html">cloudManager.cpp</a>.</p>
 
 </div>
 </div>
 <a class="anchor" id="ad3917533eda9bb6a49676b6b465e6625"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void acq::CloudManager::setCloud </td>
@@ -238,14 +228,11 @@ Protected Attributes</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="main_8cpp_source.html#l00062">62</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<p>Overwrite a cloud at a specific index. </p>
+
+<p>Definition at line <a class="el" href="cloud_manager_8cpp_source.html#l00014">14</a> of file <a class="el" href="cloud_manager_8cpp_source.html">cloudManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -268,12 +255,15 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="main_8cpp_source.html#l00094">94</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<p>List of clouds possibly with normals and faces. </p>
+
+<p>Definition at line <a class="el" href="cloud_manager_8h_source.html#l00029">29</a> of file <a class="el" href="cloud_manager_8h_source.html">cloudManager.h</a>.</p>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
-<li>src/<a class="el" href="main_8cpp_source.html">main.cpp</a></li>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>include/acq/<a class="el" href="cloud_manager_8h_source.html">cloudManager.h</a></li>
+<li>src/<a class="el" href="cloud_manager_8cpp_source.html">cloudManager.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

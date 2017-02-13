@@ -112,9 +112,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga3b700258702be146a193235c2c88dd7a"><td class="memTemplItemLeft" align="right" valign="top">Eigen::Matrix&lt; typename CloudT::Scalar, 3, 1 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___normal_estimation.html#ga3b700258702be146a193235c2c88dd7a">acq::calculatePointNormal</a> (CloudT const &amp;cloud, int const pointIndex, _NeighbourIdListT const &amp;neighbourIndices)</td></tr>
 <tr class="memdesc:ga3b700258702be146a193235c2c88dd7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estimates the normal of a single point given its ID and the ID of its neighbours.  <a href="group___normal_estimation.html#ga3b700258702be146a193235c2c88dd7a">More...</a><br /></td></tr>
 <tr class="separator:ga3b700258702be146a193235c2c88dd7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa0653c9f789f6dae2eb8e762e87ad44b"><td class="memItemLeft" align="right" valign="top">NeighboursT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___normal_estimation.html#gaa0653c9f789f6dae2eb8e762e87ad44b">acq::calculateCloudNeighbours</a> (CloudT const &amp;cloud, int const k, int const maxLeafs=10)</td></tr>
-<tr class="memdesc:gaa0653c9f789f6dae2eb8e762e87ad44b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estimates the neighbours of all points in cloud returning <code>k</code> neighbours max each.  <a href="group___normal_estimation.html#gaa0653c9f789f6dae2eb8e762e87ad44b">More...</a><br /></td></tr>
-<tr class="separator:gaa0653c9f789f6dae2eb8e762e87ad44b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaea79adb9dbcb8ac78f948583b3235e14"><td class="memItemLeft" align="right" valign="top">NeighboursT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___normal_estimation.html#gaea79adb9dbcb8ac78f948583b3235e14">acq::calculateCloudNeighbours</a> (CloudT const &amp;cloud, int const k, float const maxDist=std::sqrt(std::numeric_limits&lt; float &gt;::max())-1.f, int const maxLeafs=10)</td></tr>
+<tr class="memdesc:gaea79adb9dbcb8ac78f948583b3235e14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estimates the neighbours of all points in cloud returning <code>k</code> neighbours max each.  <a href="group___normal_estimation.html#gaea79adb9dbcb8ac78f948583b3235e14">More...</a><br /></td></tr>
+<tr class="separator:gaea79adb9dbcb8ac78f948583b3235e14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga89e61676fdd73275237f693313fa1ff7"><td class="memItemLeft" align="right" valign="top">NormalsT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___normal_estimation.html#ga89e61676fdd73275237f693313fa1ff7">acq::calculateCloudNormals</a> (CloudT const &amp;cloud, NeighboursT const &amp;neighbours)</td></tr>
 <tr class="memdesc:ga89e61676fdd73275237f693313fa1ff7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estimates the normals of all points in cloud using <code>k</code> neighbours max each.  <a href="group___normal_estimation.html#ga89e61676fdd73275237f693313fa1ff7">More...</a><br /></td></tr>
 <tr class="separator:ga89e61676fdd73275237f693313fa1ff7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -132,7 +132,7 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gaa0653c9f789f6dae2eb8e762e87ad44b"></a>
+<a class="anchor" id="gaea79adb9dbcb8ac78f948583b3235e14"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -147,6 +147,12 @@ Functions</h2></td></tr>
           <td></td>
           <td class="paramtype">int const&#160;</td>
           <td class="paramname"><em>k</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float const&#160;</td>
+          <td class="paramname"><em>maxDist</em> = <code>std::sqrt(std::numeric_limits&lt;&#160;float&#160;&gt;::max())-1.f</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -166,6 +172,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">k</td><td>How many neighbours too look for in point. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">maxDist</td><td>Maximum distance between vertex and neighbour. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">maxLeafs</td><td>FLANN parameter, maximum kdTree depth.</td></tr>
   </table>
   </dd>
@@ -245,7 +252,7 @@ template&lt;typename _FacesT &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>N x 3 3D normals, the normals of the points in <code>cloud</code>. </dd></dl>
 
-<p>Definition at line <a class="el" href="normal_estimation_8cpp_source.html#l00096">96</a> of file <a class="el" href="normal_estimation_8cpp_source.html">normalEstimation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="normal_estimation_8cpp_source.html#l00106">106</a> of file <a class="el" href="normal_estimation_8cpp_source.html">normalEstimation.cpp</a>.</p>
 
 </div>
 </div>
@@ -333,7 +340,7 @@ template&lt;typename _NeighbourIdListT &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The number of normals flipped. </dd></dl>
 
-<p>Definition at line <a class="el" href="normal_estimation_8cpp_source.html#l00119">119</a> of file <a class="el" href="normal_estimation_8cpp_source.html">normalEstimation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="normal_estimation_8cpp_source.html#l00129">129</a> of file <a class="el" href="normal_estimation_8cpp_source.html">normalEstimation.cpp</a>.</p>
 
 </div>
 </div>

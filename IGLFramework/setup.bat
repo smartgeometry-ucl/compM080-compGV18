@@ -24,7 +24,6 @@ IF NOT EXIST "3rdparty/libigl/external/nanogui/ext" (
 )
 mkdir build
 cd build
-rm CMakeCache.txt
 cmake -G "Visual Studio 14 2015 Win64" ..
 cmake --build . --config RelWithDebInfo
 RelWithDebInfo\iglFramework.exe ../3rdparty/libigl/tutorial/shared/bunny.off

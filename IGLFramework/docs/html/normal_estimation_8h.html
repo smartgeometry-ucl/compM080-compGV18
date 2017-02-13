@@ -113,6 +113,7 @@ $(document).ready(function(){initNavTree('normal_estimation_8h.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="typedefs_8h_source.html">acq/typedefs.h</a>&quot;</code><br />
+<code>#include &lt;limits.h&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for normalEstimation.h:</div>
@@ -146,9 +147,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga3b700258702be146a193235c2c88dd7a"><td class="memTemplItemLeft" align="right" valign="top">Eigen::Matrix&lt; typename CloudT::Scalar, 3, 1 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___normal_estimation.html#ga3b700258702be146a193235c2c88dd7a">acq::calculatePointNormal</a> (CloudT const &amp;cloud, int const pointIndex, _NeighbourIdListT const &amp;neighbourIndices)</td></tr>
 <tr class="memdesc:ga3b700258702be146a193235c2c88dd7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estimates the normal of a single point given its ID and the ID of its neighbours.  <a href="group___normal_estimation.html#ga3b700258702be146a193235c2c88dd7a">More...</a><br /></td></tr>
 <tr class="separator:ga3b700258702be146a193235c2c88dd7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa0653c9f789f6dae2eb8e762e87ad44b"><td class="memItemLeft" align="right" valign="top">NeighboursT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___normal_estimation.html#gaa0653c9f789f6dae2eb8e762e87ad44b">acq::calculateCloudNeighbours</a> (CloudT const &amp;cloud, int const k, int const maxLeafs=10)</td></tr>
-<tr class="memdesc:gaa0653c9f789f6dae2eb8e762e87ad44b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estimates the neighbours of all points in cloud returning <code>k</code> neighbours max each.  <a href="group___normal_estimation.html#gaa0653c9f789f6dae2eb8e762e87ad44b">More...</a><br /></td></tr>
-<tr class="separator:gaa0653c9f789f6dae2eb8e762e87ad44b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaea79adb9dbcb8ac78f948583b3235e14"><td class="memItemLeft" align="right" valign="top">NeighboursT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___normal_estimation.html#gaea79adb9dbcb8ac78f948583b3235e14">acq::calculateCloudNeighbours</a> (CloudT const &amp;cloud, int const k, float const maxDist=std::sqrt(std::numeric_limits&lt; float &gt;::max())-1.f, int const maxLeafs=10)</td></tr>
+<tr class="memdesc:gaea79adb9dbcb8ac78f948583b3235e14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estimates the neighbours of all points in cloud returning <code>k</code> neighbours max each.  <a href="group___normal_estimation.html#gaea79adb9dbcb8ac78f948583b3235e14">More...</a><br /></td></tr>
+<tr class="separator:gaea79adb9dbcb8ac78f948583b3235e14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga89e61676fdd73275237f693313fa1ff7"><td class="memItemLeft" align="right" valign="top">NormalsT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___normal_estimation.html#ga89e61676fdd73275237f693313fa1ff7">acq::calculateCloudNormals</a> (CloudT const &amp;cloud, NeighboursT const &amp;neighbours)</td></tr>
 <tr class="memdesc:ga89e61676fdd73275237f693313fa1ff7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estimates the normals of all points in cloud using <code>k</code> neighbours max each.  <a href="group___normal_estimation.html#ga89e61676fdd73275237f693313fa1ff7">More...</a><br /></td></tr>
 <tr class="separator:ga89e61676fdd73275237f693313fa1ff7"><td class="memSeparator" colspan="2">&#160;</td></tr>

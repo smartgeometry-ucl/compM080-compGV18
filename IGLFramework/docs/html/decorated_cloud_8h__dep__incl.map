@@ -1,0 +1,8 @@
+<map id="include/acq/decoratedCloud.h" name="include/acq/decoratedCloud.h">
+<area shape="rect" id="node2" href="$main_8cpp.html" title="src/main.cpp" alt="" coords="5,169,103,196"/>
+<area shape="rect" id="node3" href="$cloud_manager_8h.html" title="include/acq/cloudManager.h" alt="" coords="117,87,301,114"/>
+<area shape="rect" id="node6" href="$decorated_cloud_8hpp.html" title="include/acq/impl/decorated\lCloud.hpp" alt="" coords="360,80,537,121"/>
+<area shape="rect" id="node4" href="$cloud_manager_8hpp.html" title="include/acq/impl/cloudManager.hpp" alt="" coords="127,169,354,196"/>
+<area shape="rect" id="node5" href="$cloud_manager_8cpp.html" title="src/cloudManager.cpp" alt="" coords="165,244,316,271"/>
+<area shape="rect" id="node7" href="$decorated_cloud_8cpp.html" title="src/decoratedCloud.cpp" alt="" coords="378,169,538,196"/>
+</map>

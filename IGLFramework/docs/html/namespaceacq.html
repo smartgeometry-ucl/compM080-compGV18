@@ -117,8 +117,10 @@ $(document).ready(function(){initNavTree('namespaceacq.html','');});
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacq_1_1_cloud_manager.html">CloudManager</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Small class to keep track of multiple point clouds.  <a href="classacq_1_1_cloud_manager.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacq_1_1_decorated_cloud.html">DecoratedCloud</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple class to keep track of points normals and faces for a point cloud or mesh.  <a href="classacq_1_1_decorated_cloud.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
@@ -138,14 +140,14 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a22bf64f50054c54d1b70d2ab2acdc2e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceacq.html#a7be12026f461a86f8c88f75ee8b0b7fa">NormalsT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceacq.html#a22bf64f50054c54d1b70d2ab2acdc2e9">recalcNormals</a> (int const kNeighbours, <a class="el" href="namespaceacq.html#a9803547174b899611854ab6ab8986eed">CloudT</a> const &amp;vertices)</td></tr>
-<tr class="memdesc:a22bf64f50054c54d1b70d2ab2acdc2e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Re-estimate normals of cloud <code>V</code> fitting planes to the <code>kNeighbours</code> nearest neighbours of each point.  <a href="#a22bf64f50054c54d1b70d2ab2acdc2e9">More...</a><br /></td></tr>
-<tr class="separator:a22bf64f50054c54d1b70d2ab2acdc2e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab45798d912ef5f55901bb3feb07a57df"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceacq.html#a7be12026f461a86f8c88f75ee8b0b7fa">NormalsT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceacq.html#ab45798d912ef5f55901bb3feb07a57df">recalcNormals</a> (int const kNeighbours, <a class="el" href="namespaceacq.html#a9803547174b899611854ab6ab8986eed">CloudT</a> const &amp;vertices, float const maxNeighbourDist)</td></tr>
+<tr class="memdesc:ab45798d912ef5f55901bb3feb07a57df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Re-estimate normals of cloud <code>V</code> fitting planes to the <code>kNeighbours</code> nearest neighbours of each point.  <a href="#ab45798d912ef5f55901bb3feb07a57df">More...</a><br /></td></tr>
+<tr class="separator:ab45798d912ef5f55901bb3feb07a57df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a75ed1cecbf78cd17061f062cc69aec1d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceacq.html#a75ed1cecbf78cd17061f062cc69aec1d">setViewerNormals</a> (igl::viewer::Viewer &amp;viewer, <a class="el" href="namespaceacq.html#a9803547174b899611854ab6ab8986eed">CloudT</a> const &amp;vertices, <a class="el" href="namespaceacq.html#a7be12026f461a86f8c88f75ee8b0b7fa">NormalsT</a> const &amp;normals)</td></tr>
 <tr class="separator:a75ed1cecbf78cd17061f062cc69aec1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa0653c9f789f6dae2eb8e762e87ad44b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceacq.html#ad1ef45bac1cc92633cc06b373c14d24a">NeighboursT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___normal_estimation.html#gaa0653c9f789f6dae2eb8e762e87ad44b">calculateCloudNeighbours</a> (<a class="el" href="namespaceacq.html#a9803547174b899611854ab6ab8986eed">CloudT</a> const &amp;cloud, int const k, int const maxLeafs=10)</td></tr>
-<tr class="memdesc:gaa0653c9f789f6dae2eb8e762e87ad44b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estimates the neighbours of all points in cloud returning <code>k</code> neighbours max each.  <a href="group___normal_estimation.html#gaa0653c9f789f6dae2eb8e762e87ad44b">More...</a><br /></td></tr>
-<tr class="separator:gaa0653c9f789f6dae2eb8e762e87ad44b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaea79adb9dbcb8ac78f948583b3235e14"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceacq.html#ad1ef45bac1cc92633cc06b373c14d24a">NeighboursT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___normal_estimation.html#gaea79adb9dbcb8ac78f948583b3235e14">calculateCloudNeighbours</a> (<a class="el" href="namespaceacq.html#a9803547174b899611854ab6ab8986eed">CloudT</a> const &amp;cloud, int const k, float const maxDist=std::sqrt(std::numeric_limits&lt; float &gt;::max())-1.f, int const maxLeafs=10)</td></tr>
+<tr class="memdesc:gaea79adb9dbcb8ac78f948583b3235e14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estimates the neighbours of all points in cloud returning <code>k</code> neighbours max each.  <a href="group___normal_estimation.html#gaea79adb9dbcb8ac78f948583b3235e14">More...</a><br /></td></tr>
+<tr class="separator:gaea79adb9dbcb8ac78f948583b3235e14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga89e61676fdd73275237f693313fa1ff7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceacq.html#a7be12026f461a86f8c88f75ee8b0b7fa">NormalsT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___normal_estimation.html#ga89e61676fdd73275237f693313fa1ff7">calculateCloudNormals</a> (<a class="el" href="namespaceacq.html#a9803547174b899611854ab6ab8986eed">CloudT</a> const &amp;cloud, <a class="el" href="namespaceacq.html#ad1ef45bac1cc92633cc06b373c14d24a">NeighboursT</a> const &amp;neighbours)</td></tr>
 <tr class="memdesc:ga89e61676fdd73275237f693313fa1ff7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estimates the normals of all points in cloud using <code>k</code> neighbours max each.  <a href="group___normal_estimation.html#ga89e61676fdd73275237f693313fa1ff7">More...</a><br /></td></tr>
 <tr class="separator:ga89e61676fdd73275237f693313fa1ff7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -277,7 +279,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a22bf64f50054c54d1b70d2ab2acdc2e9"></a>
+<a class="anchor" id="ab45798d912ef5f55901bb3feb07a57df"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -291,7 +293,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespaceacq.html#a9803547174b899611854ab6ab8986eed">CloudT</a> const &amp;&#160;</td>
-          <td class="paramname"><em>vertices</em>&#160;</td>
+          <td class="paramname"><em>vertices</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float const&#160;</td>
+          <td class="paramname"><em>maxNeighbourDist</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -306,13 +314,14 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">kNeighbours</td><td>How many neighbours to use (Typiclaly: 5..15) </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">vertices</td><td>Input pointcloud. Nx3, where N is the number of points. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">maxNeighbourDist</td><td>Maximum distance between vertex and neighbour. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">viewer</td><td>The viewer to show the normals at. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The estimated normals, Nx3. </dd></dl>
 
-<p>Definition at line <a class="el" href="main_8cpp_source.html#l00105">105</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<p>Definition at line <a class="el" href="main_8cpp_source.html#l00024">24</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
 
 </div>
 </div>
@@ -346,7 +355,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="main_8cpp_source.html#l00125">125</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<p>Definition at line <a class="el" href="main_8cpp_source.html#l00046">46</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
 
 </div>
 </div>
