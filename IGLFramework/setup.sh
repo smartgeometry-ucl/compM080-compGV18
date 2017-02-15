@@ -1,15 +1,20 @@
 #!/usr/bin/env bash
 
 # Clone libIGL library from GitHub
-git clone https://github.com/libigl/libigl.git 3rdparty/libigl
+if [ ! -e 3rdparty/libigl ];
+then
+    git clone https://github.com/libigl/libigl.git 3rdparty/libigl
+fi
 # Enter NanoGui external subdirectory of libIGL
-cd 3rdparty/libigl/external/nanogui
+cd 3rdparty/libigl
 # Clone NanoGui
-git submodule update --init --recursive .
+git submodule update --init --recursive -- external/nanogui
 # Go back up to setup.sh's directory
-cd ../../../..
+cd ../..
 # Create build directory
-mkdir build
+if [ ! -e build ]; then
+    mkdir build
+fi
 # Enter build directory
 cd build
 
